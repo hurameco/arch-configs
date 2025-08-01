@@ -2,11 +2,6 @@
 # ~/.bashrc
 #
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$'
-
-[[ ${BLE_VERSION-} ]] && ble-attach
 
 case $- in
   *i*) ;;
@@ -22,8 +17,9 @@ OSH_THEME="agnoster"
 # Expand the history size
 export HISTFILESIZE=10000
 export HISTSIZE=500
-export HISTTIMEFORMAT="%F %T" # add timestamp to history
-export HISTCONTROL=erasedups:ignoredups:ignorespace
+export HISTTIMEFORMAT="%F %T"
+export HISTCONTROL=ignoreboth:erasedups
+   
 
 shopt -s checkwinsize
 
@@ -39,6 +35,8 @@ completions=(
   git
   composer
   ssh
+  docker
+
 )
 
 
@@ -54,7 +52,17 @@ alias ls='ls -aFh --color=always' # add colors and file type extensions
 alias lr='ls -lRh'                # recursive ls
 alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
+
+alias update='sudo pacman -Syu; yay -Syu'
 alias reload='source ~/.bashrc'
+alias grep='grep --color=auto'
+alias docker-compose-clean='docker system prune -af; docker volume rm $(docker volume ls -q); docker compose up --build'
+alias docker-build='docker compose up --build'
+alias szrek-vpn='openvpn3 session-start --config ~/.vpn/szrek.ovpn'
+alias chistory='cat .bash_history | sort | uniq > temp.txt; mv temp.txt .bash_history; history'
+PS1='[\u@\h \W]\$'
+
+
 
 # functions
 gcommit() {
@@ -68,11 +76,5 @@ gpush() {
   git push
 }
 
-docker-compose-clean() {
-  docker system prune -af; docker volume rm $(docker volume ls -q); docker compose up --build
-}
-
 
 source "$OSH"/oh-my-bash.sh
-
-# shopt -s autocd >> /dev/null # Bash built-in

@@ -230,10 +230,16 @@ sudo -u "$SUDO_USER" bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohm
 success "Installed oh-my-bash"
 
 # Docker service
+info Adding user to docker group
+sudo -u "$SUDO_USER" newgrp docker
+usermod -aG docker "$SUDO_USER"
 info "Starting Docker"
 if ! (systemctl enable --now docker.service; success "Docker started";);then
     warning "Failed to start Docker"
 fi
+
+
+
 
 # Cleanup
 info "Cleaning up"
