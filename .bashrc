@@ -79,7 +79,7 @@ gpush() {
     # Add all SSH keys in the ~/.ssh directory
     for key in ~/.ssh/*; do
       if [[ -f "$key" && "$key" != *".pub" ]]; then
-        ssh-add "$key"
+        ssh-add "~/.ssh/$key"
       fi
     done
   fi
