@@ -71,10 +71,19 @@ gcommit() {
 }
 
 gpush() {
-    if [ -z "$SSH_AUTH_SOCK" ]; then
+  if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent is not running. Starting it now..."
     eval "$(ssh-agent -s)"
+
+    echo "Adding SSH keys..."
+    # Add all SSH keys in the ~/.ssh directory
+    for key in ~/.ssh/*; do
+      if [[ -f "$key" && "$key" != *".pub" ]]; then
+        ssh-add "$key"
+      fi
+    done
   fi
+
   git add .
   git commit -m "$1"
   git push
