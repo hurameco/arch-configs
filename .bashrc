@@ -79,7 +79,11 @@ gpush() {
     # Add all SSH keys in the ~/.ssh directory
     for key in ~/.ssh/*; do
       if [[ -f "$key" && "$key" != *".pub" ]]; then
-        ssh-add "~/.ssh/$key"
+        # Check if the key is already added
+        if ! ssh-add -l | grep -q "$(ssh-keygen -lf "$key" | awk '{print $2}')"; then
+          echo "Adding key: $key"
+          ssh-add "$key"
+        fi
       fi
     done
   fi
