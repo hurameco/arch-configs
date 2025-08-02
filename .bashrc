@@ -71,9 +71,28 @@ gcommit() {
 }
 
 gpush() {
+  add-ssh-keys
   git add .
   git commit -m "$1"
   git push
+}
+
+add-ssh-keys() {
+  #ignore .pub files that are not keys
+  if ! command -v ssh-add &> /dev/null; then
+    echo "ssh-add command not found. Please install OpenSSH client."
+    return 1
+  fi
+  if [ -z "$SSH_AUTH_SOCK" ]; then
+    echo "SSH agent is not running. Starting it now..."
+    eval "$(ssh-agent -s)"
+  fi
+  echo "Adding SSH keys to the agent..."
+  for key in ~/.ssh/*.pub; do
+    if [ -f "$key" ]; then
+      ssh-add "$key"
+    fi
+  done
 }
 
 
