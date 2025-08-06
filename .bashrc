@@ -54,13 +54,19 @@ alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
 
 alias update='sudo pacman -Syu; yay -Syu'
+alias shutdown='sudo shutdown now'
+alias reboot='sudo reboot now!@'
+alias performance='powerprofilesctl set performance'
+alias powersaver='powerprofilesctl set power-saver'
 alias reload='source ~/.bashrc'
 alias grep='grep --color=auto'
 alias docker-compose-clean='docker system prune -af; docker volume rm $(docker volume ls -q); docker compose up --build'
 alias docker-build='docker compose up --build'
 alias szrek-vpn='openvpn3 session-start --config ~/.vpn/szrek.ovpn'
 alias chistory='cat .bash_history | sort | uniq > temp.txt; mv temp.txt .bash_history; history'
+
 PS1='[\u@\h \W]\$'
+
 
 
 
