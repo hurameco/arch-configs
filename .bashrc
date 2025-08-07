@@ -55,7 +55,7 @@ alias ldir="ls -l | egrep '^d'"   # directories only
 
 alias update='sudo pacman -Syu; yay -Syu'
 alias shutdown='sudo shutdown now'
-alias reboot='sudo reboot now!@'
+alias reboot='sudo reboot now'
 alias performance='powerprofilesctl set performance'
 alias powersaver='powerprofilesctl set power-saver'
 alias reload='source ~/.bashrc'
@@ -71,12 +71,12 @@ PS1='[\u@\h \W]\$'
 
 
 # functions
-gcommit() {
+commit() {
   git add .
   git commit -m "$1"
 }
 
-gpush() {
+push() {
   if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent is not running. Starting it now..."
     eval "$(ssh-agent -s)"
