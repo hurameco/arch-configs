@@ -76,7 +76,7 @@ commit() {
   git commit -m "$1"
 }
 
-push() {
+add-ssh-keys() {
   if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent is not running. Starting it now..."
     eval "$(ssh-agent -s)"
@@ -93,7 +93,10 @@ push() {
       fi
     done
   fi
+}
 
+push() {
+  add-ssh-keys
   git add .
   git commit -m "$1"
   git push
