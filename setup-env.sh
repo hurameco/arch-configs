@@ -102,7 +102,7 @@ success "System updated"
 # Install packages
 info "Installing packages..."
 for pkg in "${PACMAN_PACKAGES[@]}"; do
-    if ! sudo pacman -Qi "$pkg" >/dev/null; then
+    if ! (sudo pacman -Qi "$pkg") >/dev/null; then
         info "Installing $pkg"
         if ! sudo pacman -S "$pkg" --noconfirm >/dev/null; then
             warning "Failed to install $pkg"

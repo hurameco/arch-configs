@@ -3,7 +3,7 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces"],
 
-  "modules-center": ["clock"],
+  "modules-center": ["clock","custom/music"],
 
   "modules-right": [
     "tray",
@@ -31,11 +31,12 @@
   "custom/music": {
     "format": "  {}",
     "escape": true,
-    "interval": 5,
+    "interval": 1,
+    "exec-if": "pgrep spotify",
     "tooltip": false,
-    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }} [{{ duration(position) }}/{{ duration(mpris:length) }}]'",
     "on-click": "playerctl play-pause",
-    "max-length": 50
+    "max-length": 100
   },
 
   "clock": {
