@@ -65,18 +65,12 @@ alias docker-build='docker compose up --build'
 alias szrek-vpn='openvpn3 session-start --config ~/.vpn/szrek.ovpn'
 alias chistory='cat .bash_history | sort | uniq > temp.txt; mv temp.txt .bash_history; history'
 alias status='git status'
+alias pull='add-ss-keys; git pull'
+alias fetch='add-ssh-keys; git fetch'
 
 PS1='[\u@\h \W]\$'
 
-
-
-
 # functions
-commit() {
-  git add .
-  git commit -m "$1"
-}
-
 add-ssh-keys() {
   if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent is not running. Starting it now..."
@@ -95,6 +89,13 @@ add-ssh-keys() {
     done
   fi
 }
+
+commit() {
+  git add .
+  git commit -m "$1"
+}
+
+
 
 push() {
   add-ssh-keys
