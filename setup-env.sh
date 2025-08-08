@@ -53,8 +53,8 @@ YAY_PACKAGES=(
     thunderbird
     visual-studio-code-bin
     zapzap
-)
     # openvpn3
+)
 
 DEFAULT_CONFIGS_FOLDER="~/.arch-configs"
 DEFAULT_YAY_FOLDER="~/.yay"
@@ -98,33 +98,23 @@ if ! sudo pacman -Syu --noconfirm; then
 fi
 success "System updated"
 
-# Function to install packages
-install_packages() {
-    info "Installing $1 packages..."
-    local manager="$1"
-    shift
-    local packages=("$@")
-    
-    for pkg in "${packages[@]}"; do
-        if $manager -Qi "$pkg" >/dev/null; then
-            success "$pkg already installed"
-            continue
-        fi
-        
+# Install packages
+info "Installing packages..."
+for pkg in "${PACMAN_PACKAGES[@]}"; do
+    if ! sudo pacman -Qi "$pkg" >/dev/null; then
         info "Installing $pkg"
-        if ! $manager -S "$pkg" --noconfirm >/dev/null; then
+        if ! sudo pacman -S "$pkg" --noconfirm >/dev/null; then
             warning "Failed to install $pkg"
         fi
-    done
-}
-
-# Install pacman packages
-install_packages "sudo pacman" "${PACMAN_PACKAGES[@]}"
+    else
+        success "$pkg already installed"
+    fi
+done
 
 # Install yay if needed
 if ! command -v yay >/dev/null; then
     info "Installing yay"
-    mkdir "$DEFAULT_YAY_FOLDER"
+    mkdir -p "$DEFAULT_YAY_FOLDER"
     chmod 777 "$DEFAULT_YAY_FOLDER"
     if ! git clone -q https://aur.archlinux.org/yay-bin.git "$DEFAULT_YAY_FOLDER" >/dev/null; then
         rm -rf "$DEFAULT_YAY_FOLDER"
@@ -132,26 +122,35 @@ if ! command -v yay >/dev/null; then
     fi
     
     if ! (cd "$DEFAULT_YAY_FOLDER"; makepkg -si --noconfirm); then
-        rm -rf "$tmp"
+        rm -rf "$DEFAULT_YAY_FOLDER"
         error "Failed to install yay"
     fi
-   rm -rfrm -rf "$tmp" "$tmp"
+    rm -rfrm -rf "$DEFAULT_YAY_FOLDER" "$DEFAULT_YAY_FOLDER"
 fi
 
 # Install AUR packages
-install_packages "yay" "${YAY_PACKAGES[@]}"
+for pkg in "${YAY_PACKAGES[@]}"; do
+    if ! yay -Qi "$pkg" >/dev/null; then
+        info "Installing $pkg"
+        if ! yay -S "$pkg" --noconfirm >/dev/null; then
+            warning "Failed to install $pkg"
+        fi
+    else
+        success "$pkg already installed"
+    fi
+done
 
 info "Installing oh-my-bash"
 cd ~
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 success "Installed oh-my-bash"
 
-info "Installng Dotnet Entity Framewowrk"
+info "Installing Dotnet Entity Framework"
 dotnet tool install --global dotnet-ef >/dev/null
 
-#Docker service
+# Docker service
 if ! getent group "docker" >/dev/null; then
-    info Adding user to docker group
+    info "Adding user to docker group"
     sudo groupadd docker
     sudo usermod -aG docker "$USER"
     newgrp docker
@@ -160,7 +159,6 @@ if ! getent group "docker" >/dev/null; then
         warning "Failed to start Docker"
     fi
 fi
-
 
 # Cleanup
 info "Cleaning up"
@@ -203,7 +201,6 @@ for config in "${CONFIGS[@]}"; do
 done
 success "Successfully set up config files using symlinks"
 
-
 # Create a beautiful finished message
 cat <<EOF
 ----------------------------------------
@@ -218,3 +215,4 @@ source ./bashrc
 # Wait for any key to exit
 read -n 1 -s -r -p "Press any key to reboot..."
 reboot
+

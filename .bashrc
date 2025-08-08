@@ -64,6 +64,7 @@ alias docker-compose-clean='docker system prune -af; docker volume rm $(docker v
 alias docker-build='docker compose up --build'
 alias szrek-vpn='openvpn3 session-start --config ~/.vpn/szrek.ovpn'
 alias chistory='cat .bash_history | sort | uniq > temp.txt; mv temp.txt .bash_history; history'
+alias status='git status'
 
 PS1='[\u@\h \W]\$'
 

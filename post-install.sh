@@ -25,7 +25,7 @@ elapsed_time() {
 # Modify Boot Order
 info "Installing necessary packages"
 
-sudo pacman -S grub efibootmgr os-prober --no-confirm >/dev/null;
+sudo pacman -S grub efibootmgr os-prober --noconfirm >/dev/null 2>&1
 
 # Modify /mnt/etc/default/grub to uncomment the last line
 if [ -f /mnt/etc/default/grub ]; then
@@ -40,7 +40,7 @@ else
 fi
 
 # Install GRUB to the EFI directory
-Info "Installing GRUB to EFI directory"
+info "Installing GRUB to EFI directory"
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 
 # Generate GRUB configuration file
@@ -68,3 +68,4 @@ else
     error "GRUB boot entry not found in efibootmgr."
 fi
 success "GRUB installation and configuration completed."
+
