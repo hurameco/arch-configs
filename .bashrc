@@ -54,8 +54,8 @@ alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
 
 alias update='sudo pacman -Syu; yay -Syu'
-alias shutdown='sudo shutdown now'
-alias reboot='sudo reboot now'
+alias shutdown='shutdown now'
+alias reboot='reboot now'
 alias performance='powerprofilesctl set performance'
 alias powersaver='powerprofilesctl set power-saver'
 alias reload='source ~/.bashrc'
