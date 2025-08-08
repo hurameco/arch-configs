@@ -53,7 +53,7 @@ alias lr='ls -lRh'                # recursive ls
 alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
 
-alias update='sudo pacman -Syu; yay -Syu'
+alias update='sudo pacman -Syu --noconfirm; yay -Syu --noconfirm'
 alias shutdown='shutdown now'
 alias reboot='reboot now'
 alias performance='powerprofilesctl set performance'
@@ -65,7 +65,7 @@ alias docker-build='docker compose up --build'
 alias szrek-vpn='openvpn3 session-start --config ~/.vpn/szrek.ovpn'
 alias chistory='cat .bash_history | sort | uniq > temp.txt; mv temp.txt .bash_history; history'
 alias status='git status'
-alias pull='add-ss-keys; git pull'
+alias pull='add-ssh-keys; git pull'
 alias fetch='add-ssh-keys; git fetch'
 
 PS1='[\u@\h \W]\$'
