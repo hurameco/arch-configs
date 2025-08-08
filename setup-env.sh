@@ -32,6 +32,7 @@ PACMAN_PACKAGES=(
     ghostty
     git
     hyprlock
+    openvpn
     pavucontrol
     power-profiles-daemon
     telegram-desktop
