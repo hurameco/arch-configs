@@ -101,8 +101,9 @@ button {
 }
 
 #custom-music {
-  color: #ca9ee6;
+  color: #00d82f;
   border-radius: 5px;
+  margin-left: 15px;
 }
 
 #custom-lock {

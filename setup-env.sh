@@ -148,6 +148,7 @@ success "Installed oh-my-bash"
 
 info "Installing Dotnet Entity Framework"
 dotnet tool install --global dotnet-ef >/dev/null
+export PATH="$PATH:$HOME/.dotnet/tools"
 
 # Docker service
 if ! getent group "docker" >/dev/null; then

@@ -32,7 +32,6 @@
     "format": "  {}",
     "escape": true,
     "interval": 1,
-    "exec-if": "pgrep spotify",
     "tooltip": false,
     "exec": "playerctl metadata --format='{{ artist }} - {{ title }} [{{ duration(position) }}/{{ duration(mpris:length) }}]'",
     "on-click": "playerctl play-pause",
